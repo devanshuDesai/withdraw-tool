@@ -8,7 +8,7 @@ parser.add_argument('--path', metavar='-p',
                     default=GRADEBOOK_PATH, help='Path to Gradebook')
 # TODO: Find a way to automate this
 parser.add_argument('--count', metavar='-c', type=int,
-                    help='Number of HWs graded so far')
+                    required=True, help='Number of HWs graded so far')
 # TODO: Add functionality to automatically send out emails here
 parser.add_argument('--email', action='store_true', help='Only output the emails of the students with non-zero missed assignments (default: output all emails)')
 args = parser.parse_args()

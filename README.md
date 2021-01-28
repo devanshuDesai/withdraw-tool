@@ -3,7 +3,9 @@
 
 ## Examples
 To run,
-```python run.py --count 2```
+```
+python run.py --count 2
+```
 
 Here `--count` is a mandatory argument for now to specify how many homeworks
 have been graded so far. This is to not confuse the script with homeworks
@@ -15,10 +17,14 @@ This command generates two separate `csv` files:
 where {x} is 2 in this example.
 
 You can also specify custom file paths to the gradebook.
-```python run.py --path ./gradebook.csv --count 2```
+```
+python run.py --path ./gradebook.csv --count 2
+```
 
 You can also add `--email` to only get the emails of the students who have not submitted at least one assignment or have used at least one slip day. I will be trying to eventually make this send emails automatically.
-```python run.py --count 2 --email```
+```
+python run.py --count 2 --email
+```
 
 ## TODO:
 - Automatically detect how many assignments are graded.
