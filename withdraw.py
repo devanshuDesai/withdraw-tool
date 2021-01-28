@@ -1,8 +1,12 @@
 import re
+import argparse
 import pandas as pd
 
-df = pd.read_csv('~/Downloads/DSC_40B_Winter_2021_grades.csv')
+GRADEBOOK_PATH = '~/Downloads/DSC_40B_Winter_2021_grades.csv'
 NUM_GRADED = 2  # TODO: Find a way to automate this
+
+df = pd.read_csv(GRADEBOOK_PATH)
+parser = argparse.ArgumentParser()
 
 # Selecting correct columns
 detail_cols = ['Name', 'Email']
