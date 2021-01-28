@@ -6,9 +6,6 @@ GRADEBOOK_PATH = '~/Downloads/DSC_40B_Winter_2021_grades.csv'
 parser = argparse.ArgumentParser()
 parser.add_argument('--path', metavar='-p',
                     default=GRADEBOOK_PATH, help='Path to Gradebook')
-# TODO: Find a way to automate this
-parser.add_argument('--count', metavar='-c', type=int,
-                    required=True, help='Number of HWs graded so far')
 # TODO: Add functionality to automatically send out emails here
 parser.add_argument('--email', action='store_true', help='Only output the emails of the students with non-zero missed assignments (default: output all emails)')
 args = parser.parse_args()
@@ -18,10 +15,20 @@ df = pd.read_csv(args.path)
 # Selecting correct columns
 detail_cols = ['Name', 'Email']
 late_cols = list(filter(lambda x: re.match(r'^[\w\d\s]+ - Lateness.*', x),
-                        df.columns))[:args.count]
+                        df.columns))
 score_cols = list(filter(lambda x: re.match(r'^[\w\d\s]+\d$', x),
-                         df.columns))[:args.count]
+                         df.columns))
 # Note that we're filtering the programming assignments
+
+# First we need to filter out columns that are not graded
+NUM_GRADED = 0
+for col in score_cols:
+    if (df[col].isnull().mean() < 0.5):
+        NUM_GRADED += 1
+    else:
+        break
+score_cols = score_cols[:NUM_GRADED]
+late_cols = late_cols[:NUM_GRADED]
 
 # Converting columns to timedelta objects
 for col in late_cols:
@@ -39,7 +46,7 @@ late_df = late_df.sort_values('slip_days', ascending=False)
 # Saving the results
 if args.email:
     late_df = late_df[late_df.slip_days > 0]
-late_df.to_csv(f'slip_days_{args.count}.csv', index=False)
+late_df.to_csv(f'slip_days_{NUM_GRADED}.csv', index=False)
 
 # 2. Consecutive assignments not turned in
 
@@ -64,4 +71,4 @@ missing_df = missing_df.sort_values('missed_assignments', ascending=False)
 # Saving the results
 if args.email:
     missing_df = missing_df[missing_df.missed_assignments > 0]
-missing_df.to_csv(f'missing_{args.count}.csv', index=False)
+missing_df.to_csv(f'missing_{NUM_GRADED}.csv', index=False)
