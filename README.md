@@ -8,12 +8,12 @@ python run.py --count 2
 ```
 
 Here `--count` is a mandatory argument for now to specify how many homeworks
-have been graded so far. This is to not confuse the script with homeworks
-that have been submitted but not graded so it becomes difficult to tell if the student submitted the homework or not. I am trying to get the code to infer this automatically in a future build.
+have been graded so far. This is to not confuse the script with homeworks that have been submitted but not graded. I am trying to get the code to infer this automatically in a future build.
 
 This command generates two separate `csv` files:
 1. `slip_days_{x}` includes the number of slip days each student has used.
 2. `missing_{x}` includes the number of consecutive assignments not turned in by the student.
+
 where {x} is 2 in this example.
 
 You can also specify custom file paths to the gradebook.
