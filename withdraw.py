@@ -1,16 +1,16 @@
-import pandas as pd
 import re
+import pandas as pd
 
-# TODO: Account for coding problems
 df = pd.read_csv('~/Downloads/DSC_40B_Winter_2021_grades.csv')
 NUM_GRADED = 2  # TODO: Find a way to automate this
 
 # Selecting correct columns
 detail_cols = ['Name', 'Email']
-late_cols = list(filter(lambda x: re.match(r'.* - Lateness.*', x),
+late_cols = list(filter(lambda x: re.match(r'^[\w\d\s]+ - Lateness.*', x),
                         df.columns))[:NUM_GRADED]
-score_cols = list(filter(lambda x: re.match(r'.*\d$', x),
+score_cols = list(filter(lambda x: re.match(r'^[\w\d\s]+\d$', x),
                          df.columns))[:NUM_GRADED]
+# Note that we're filtering the programming assignments
 
 # Converting columns to timedelta objects
 for col in late_cols:
